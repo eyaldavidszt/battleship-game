@@ -62,7 +62,9 @@ export default function Gameboard() {
     const x = coords[0];
     const y = coords[1];
     board[x][y].beenHit = true;
-    board[x][y].shipCell.hit();
+    if (board[x][y].shipCell !== null) {
+      board[x][y].shipCell.hit();
+    }
   };
   const allSunk = () => {
     for (let i = 0; i < allShips.length; i += 1) {
@@ -70,5 +72,5 @@ export default function Gameboard() {
     }
     return true;
   };
-  return { placeShip, receiveAttack, allSunk };
+  return { placeShip, receiveAttack, allSunk, board };
 }
