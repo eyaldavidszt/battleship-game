@@ -12,3 +12,7 @@ it("sinks ship when hits = length", () => {
   ship.hit();
   expect(ship.isSunk()).toBe(true);
 });
+
+it("reject lengths that aren't 5, 4, 3, or 2?", () => {
+  expect(() => Ship({ length: 6 })).toThrow("Invalid ship length");
+});
