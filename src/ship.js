@@ -7,5 +7,6 @@ export default function Ship({ length }) {
     if (hits === length) return true;
     return false;
   };
-  return { isSunk, hit };
+  const getLength = () => length;
+  return { isSunk, hit, getLength };
 }
