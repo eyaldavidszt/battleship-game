@@ -72,5 +72,5 @@ export default function Gameboard() {
     }
     return true;
   };
-  return { placeShip, receiveAttack, allSunk, board };
+  return { placeShip, receiveAttack, allSunk, board, allShips };
 }
