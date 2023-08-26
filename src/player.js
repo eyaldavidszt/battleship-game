@@ -1,7 +1,8 @@
 import Gameboard from "./gameboard";
 
 export default function Player({ name }) {
-  const isWinner = false;
+  // eslint-disable-next-line prefer-const
+  let isWinner = false;
   const gameboard = Gameboard();
   const getBoard = () => gameboard;
   const getName = () => name;
