@@ -1,6 +1,7 @@
 import Gameboard from "./gameboard";
 
 export default function Player({ name }) {
+  const isWinner = false;
   const gameboard = Gameboard();
   const getBoard = () => gameboard;
   const getName = () => name;
@@ -11,5 +12,6 @@ export default function Player({ name }) {
     getName,
     getBoard,
     attack,
+    isWinner,
   };
 }
