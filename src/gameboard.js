@@ -22,10 +22,10 @@ export default function Gameboard() {
       }
     }
     for (let i = 0; i < 2; i += 1) {
-      if (startingArr[i] > 9 || endingArr[i] > 9)
-        throw new Error("Invalid coordinates");
-      if (startingArr[i] < 0 || endingArr[i] < 0)
-        throw new Error("Invalid coordinates");
+      if (startingArr[i] > 9 || endingArr[i] > 9) return;
+      // throw new Error("Invalid coordinates");
+      if (startingArr[i] < 0 || endingArr[i] < 0) return;
+      // throw new Error("Invalid coordinates");
     }
     let ship = "";
     if (startingArr[0] !== endingArr[0]) {
@@ -33,13 +33,17 @@ export default function Gameboard() {
     } else if (startingArr[1] !== endingArr[1]) {
       ship = Ship({ length: Math.abs(startingArr[1] - endingArr[1]) + 1 });
     }
+
     if (startingArr[0] !== endingArr[0]) {
+      // 3,3 -> 8, 3
+
       const height = startingArr[1];
       for (
         let i = Math.min(startingArr[0], endingArr[0]);
         i <= Math.max(startingArr[0], endingArr[0]);
         i += 1
       ) {
+        if (board[i][height].shipCell !== null) return;
         board[i][height].shipCell = ship;
       }
     }
@@ -50,6 +54,7 @@ export default function Gameboard() {
         i <= Math.max(startingArr[1], endingArr[1]);
         i += 1
       ) {
+        if (board[x][i].shipCell !== null) return;
         board[x][i].shipCell = ship;
       }
     }

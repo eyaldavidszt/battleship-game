@@ -22,6 +22,7 @@ export default function Gamecontroller(
   };
   const playPlaceRound = (starting, ending) => {
     if (boardsFilled) throw new Error("all ships already placed");
+    const oldShipCount = activePlayer.getBoard().allShips.length;
     activePlayer.getBoard().placeShip(starting, ending);
     if (
       activePlayer.getBoard().allShips.length >= 5 &&
@@ -29,7 +30,9 @@ export default function Gamecontroller(
     ) {
       boardsFilled = true;
     }
-    changeActivePlayer();
+    if (activePlayer.getBoard().allShips.length > oldShipCount) {
+      changeActivePlayer();
+    }
   };
   const playRound = (coordinates) => {
     if (gameOver) throw new Error("game over");
@@ -118,22 +121,8 @@ export default function Gamecontroller(
   };
   const getHuman = () => playerOne;
   const getCPU = () => playerTwo;
-  const computerPlayPlaceRound = () => {
-    if (activePlayer !== playerTwo) throw new Error("bad...");
-    const oldShipCount = playerTwo.getBoard().allShips.length;
-    do {
-      const starting = [];
-      const randX = Math.floor(Math.random() * 9);
-      const randY = Math.floor(Math.random() * 9);
-      const randLength = Math.floor(Math.random() * 4) + 1;
-      starting.push(randX);
-      starting.push(randY);
-      const ending = [randX, randY];
-      const index = Math.floor(Math.random() * 2);
-      ending[index] += randLength;
-      playPlaceRound(starting, ending);
-    } while (playerTwo.getBoard().allShips.length === oldShipCount);
-  };
+
+  const computerPlayPlaceRound = () => {};
   //
   return {
     playRound,
