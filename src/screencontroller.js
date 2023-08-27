@@ -125,6 +125,8 @@ export default function Screencontroller() {
         if (index === 1) {
           board.addEventListener("click", DOMReceiveAttack);
         }
+        boardsContainer.appendChild(DOMboard2);
+
       });
     }
     // eslint-disable-next-line no-use-before-define
@@ -135,7 +137,6 @@ export default function Screencontroller() {
     DOMBoard.addEventListener("click", DOMShipPlace);
   });
   boardsContainer.appendChild(DOMboard1);
-  boardsContainer.appendChild(DOMboard2);
 
   function updateBoard() {
     const humanBoard = game.getHuman().getBoard().board;
