@@ -3,3 +3,36 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.board {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 500px;
+  width: 500px;
+  > * {
+    display: flex;
+    flex: 1;
+    > * {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+  }
+}
+
+.boards-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+button {
+  all: initial;
+  background-color: rgb(209, 209, 209);
+  border: 1px solid black;
+}
