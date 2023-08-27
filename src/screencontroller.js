@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable radix */
@@ -13,8 +14,9 @@ export default function Screencontroller() {
     "Place submarine (length 3",
     "Place destroyer (length 2)",
   ];
-
   let DOMIndex = 0;
+  const DOMInstructor = document.querySelector(".instructions");
+  DOMInstructor.textContent = DOMInstructions[DOMIndex];
   const boardsContainer = document.querySelector(".boards-container");
   const DOMboard1 = document.createElement("div");
   const DOMboard2 = document.createElement("div");
@@ -81,8 +83,6 @@ export default function Screencontroller() {
       if (randAngle === "vertical") {
         cpuEnding[0] += DOMLengths[DOMIndex];
       }
-      console.log(cpuStarting[0], cpuStarting[1]);
-      console.log(cpuEnding[0], cpuEnding[1]);
       if (cpuEnding[0] > 9) continue;
       if (cpuEnding[1] > 9) continue;
 
@@ -93,7 +93,6 @@ export default function Screencontroller() {
         // check every square in the path to see if bad. if bad, continue keyword
         const height = cpuStarting[1];
         for (let i = cpuStarting[0]; i <= cpuEnding[0]; i += 1) {
-          console.log(cpuEnding[0]);
           if (game.getCPU().getBoard().board[i][height].shipCell !== null) {
             // eslint-disable-next-line no-continue
             count += 1;
@@ -118,6 +117,7 @@ export default function Screencontroller() {
       game.playPlaceRound(cpuStarting, cpuEnding);
     }
     DOMIndex += 1;
+    DOMInstructor.textContent = DOMInstructions[DOMIndex] || "";
     if (DOMIndex === 5) {
       //
       DOMBoards.forEach((board, index) => {
