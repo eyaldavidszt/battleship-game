@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable radix */
 import Gamecontroller from "./gamecontroller";
@@ -18,6 +19,13 @@ export default function Screencontroller() {
   const DOMboard1 = document.createElement("div");
   const DOMboard2 = document.createElement("div");
   const DOMBoards = [DOMboard1, DOMboard2];
+  function DOMReceiveAttack(event) {
+    // get dataset coordinates
+    // make sure that if already beenhit, return
+    // player.playturn
+    // generate random coords until valid
+    // cpu.playturn
+  }
   const DOMShipPlace = (event) => {
     const row = parseInt(event.target.dataset.row);
     const cell = parseInt(event.target.dataset.cell);
@@ -25,15 +33,37 @@ export default function Screencontroller() {
     const ending = [row, cell];
     const angle = document.querySelector("#placement-angle").value;
     if (angle === "horizontal") {
-        ending[1] += DOMLengths[DOMIndex];
+      ending[1] += DOMLengths[DOMIndex];
     }
     if (angle === "vertical") {
-        ending[0] += DOMLengths[DOMIndex];
+      ending[0] += DOMLengths[DOMIndex];
     }
     for (let i = 0; i < 2; i += 1) {
       if (starting[i] > 9 || ending[i] > 9) return;
       if (starting[i] < 0 || ending[i] < 0) return;
     }
+    // test here again
+    if (starting[0] !== ending[0]) {
+      // check every square in the path to see if bad. if bad, continue keyword
+      const height = starting[1];
+      for (let i = starting[0]; i <= ending[0]; i += 1) {
+        if (game.getHuman().getBoard().board[i][height].shipCell !== null) {
+          // eslint-disable-next-line no-continue
+          return;
+        }
+      }
+    }
+    if (starting[1] !== ending[1]) {
+      const x = starting[0];
+      for (
+        let i = Math.min(starting[1], ending[1]);
+        i <= Math.max(starting[1], ending[1]);
+        i += 1
+      ) {
+        if (game.getHuman().getBoard().board[x][i].shipCell !== null) return;
+      }
+    }
+
     game.playPlaceRound(starting, ending);
     // here make logic for new starting ending
     // I CAN DO A WHILE LOOP!
@@ -45,17 +75,59 @@ export default function Screencontroller() {
       const randAngle = randAngles[Math.floor(Math.random() * 2)];
       const cpuStarting = [randX, randY];
       const cpuEnding = [randX, randY];
-      // check coordinate validity...
       if (randAngle === "horizontal") {
         cpuEnding[1] += DOMLengths[DOMIndex];
       }
       if (randAngle === "vertical") {
         cpuEnding[0] += DOMLengths[DOMIndex];
       }
+      console.log(cpuStarting[0], cpuStarting[1]);
+      console.log(cpuEnding[0], cpuEnding[1]);
+      if (cpuEnding[0] > 9) continue;
+      if (cpuEnding[1] > 9) continue;
+
+      // check coordinate validity...
+      // if angle is vertical... start[0] !== end[0]
+      let count = 0;
+      if (cpuStarting[0] !== cpuEnding[0]) {
+        // check every square in the path to see if bad. if bad, continue keyword
+        const height = cpuStarting[1];
+        for (let i = cpuStarting[0]; i <= cpuEnding[0]; i += 1) {
+          console.log(cpuEnding[0]);
+          if (game.getCPU().getBoard().board[i][height].shipCell !== null) {
+            // eslint-disable-next-line no-continue
+            count += 1;
+          }
+        }
+      }
+      if (cpuStarting[1] !== cpuEnding[1]) {
+        const x = cpuStarting[0];
+        for (
+          let i = Math.min(cpuStarting[1], cpuEnding[1]);
+          i <= Math.max(cpuStarting[1], cpuEnding[1]);
+          i += 1
+        ) {
+          if (game.getCPU().getBoard().board[x][i].shipCell !== null)
+            count += 1;
+        }
+      }
+      if (count !== 0) {
+        continue;
+      }
 
       game.playPlaceRound(cpuStarting, cpuEnding);
     }
     DOMIndex += 1;
+    if (DOMIndex === 5) {
+      //
+      DOMBoards.forEach((board, index) => {
+        board.removeEventListener("click", DOMShipPlace);
+        if (index === 1) {
+          board.addEventListener("click", DOMReceiveAttack);
+        }
+      });
+    }
+    // eslint-disable-next-line no-use-before-define
     updateBoard();
   };
   DOMBoards.forEach((DOMBoard) => {

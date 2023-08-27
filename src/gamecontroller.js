@@ -37,6 +37,11 @@ export default function Gamecontroller(
   const playRound = (coordinates) => {
     if (gameOver) throw new Error("game over");
     if (boardsFilled === false) throw new Error("not all ships placed");
+    if (
+      waitingPlayer.getBoard().board[coordinates[0]][coordinates[1]].beenHit ===
+      true
+    )
+      return;
     waitingPlayer.receiveAttack(coordinates);
     if (waitingPlayer.allSunk()) {
       activePlayer.isWinner = true;
