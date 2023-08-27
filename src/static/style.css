@@ -1,9 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Playfair+Display&family=VT323&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "VT323", monospace;
 }
-
+body {
+  min-height: 100svh;
+  background-color: rgb(127, 214, 255);
+}
 .board {
   border: 1px solid black;
   display: flex;
@@ -25,6 +32,12 @@
   }
 }
 
+.title {
+  font-family: "Bungee Spice", serif;
+  font-size: 4rem;
+  text-align: center;
+}
+
 .boards-container {
   display: flex;
   justify-content: center;
@@ -35,4 +48,23 @@ button {
   all: initial;
   background-color: rgb(209, 209, 209);
   border: 1px solid black;
+}
+
+.instructions {
+  text-align: center;
+  font-size: 2rem;
+}
+label {
+  font-size: 2rem;
+}
+.angle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+select {
+  font-family: "VT323", monospace;
+  font-size: 2rem;
 }

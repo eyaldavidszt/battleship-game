@@ -126,7 +126,7 @@ export default function Screencontroller() {
           board.addEventListener("click", DOMReceiveAttack);
         }
         boardsContainer.appendChild(DOMboard2);
-
+        DOMInstructor.textContent = "Sink your opponent!";
       });
     }
     // eslint-disable-next-line no-use-before-define
