@@ -193,11 +193,11 @@ export default function Screencontroller() {
           const DOMCell = document.createElement("button");
           DOMCell.dataset.row = `${rowIndex}`;
           DOMCell.dataset.cell = `${cellIndex}`;
-          // if (boardIndex === 0) {
+           if (boardIndex === 0) {
           if (cell.shipCell !== null) {
             DOMCell.style.backgroundColor = "red";
           }
-          // }
+           }
           if (cell.beenHit === true) {
             DOMCell.innerHTML = "&times;";
             if (cell.shipCell !== null) {
