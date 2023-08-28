@@ -47,7 +47,6 @@ export default function Gamecontroller(
       activePlayer.isWinner = true;
       gameOver = true;
     }
-    console.log(gameOver);
     changeActivePlayer();
   };
   const getActivePlayer = () => activePlayer;

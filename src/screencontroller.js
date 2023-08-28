@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-restricted-globals */
@@ -25,7 +26,6 @@ export default function Screencontroller() {
     // get dataset coordinates
     const row = parseInt(event.target.dataset.row);
     const cell = parseInt(event.target.dataset.cell);
-    console.log(row, cell);
     if (game.getWaitingPlayer().getBoard().board[row][cell].beenHit === true)
       return;
     if (game.gameOver) return;
@@ -35,30 +35,12 @@ export default function Screencontroller() {
       DOMInstructor.textContent = "Game over! Player 2 wins!";
     }
     updateBoard();
-    console.log(game.gameOver);
 
     if (game.gameOver === true) {
       // remove event listener from board.
       DOMBoards[1].removeEventListener("click", DOMReceiveAttack);
       return;
     }
-    // generate random coords as long as theyre invalid...
-    // eslint-disable-next-line no-constant-condition
-    // while (true) {
-    //   const randX = Math.floor(Math.random() * 10);
-    //   const randY = Math.floor(Math.random() * 10);
-    //   if (
-    //     game.getWaitingPlayer().getBoard().board[randX][randY].beenHit === true
-    //   ) {
-    //     continue;
-    //   }
-    //   try {
-    //     game.playRound([randX, randY]);
-    //   } catch {
-    //     DOMInstructor.textContent = "Game over! Human wins!";
-    //   }
-    //   break;
-    // }
     try {
       game.computerPlayRound();
     } catch {
@@ -169,6 +151,8 @@ export default function Screencontroller() {
         }
         boardsContainer.appendChild(DOMboard2);
         DOMInstructor.textContent = "Sink your opponent!";
+        document.querySelector(".angle-wrapper").style.opacity = 0;
+        document.querySelector("select").disabled = true;
       });
     }
     // eslint-disable-next-line no-use-before-define
@@ -193,11 +177,11 @@ export default function Screencontroller() {
           const DOMCell = document.createElement("button");
           DOMCell.dataset.row = `${rowIndex}`;
           DOMCell.dataset.cell = `${cellIndex}`;
-           if (boardIndex === 0) {
-          if (cell.shipCell !== null) {
-            DOMCell.style.backgroundColor = "red";
+          if (boardIndex === 0) {
+            if (cell.shipCell !== null) {
+              DOMCell.style.backgroundColor = "red";
+            }
           }
-           }
           if (cell.beenHit === true) {
             DOMCell.innerHTML = "&times;";
             if (cell.shipCell !== null) {
