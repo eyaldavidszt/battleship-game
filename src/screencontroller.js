@@ -23,10 +23,52 @@ export default function Screencontroller() {
   const DOMBoards = [DOMboard1, DOMboard2];
   function DOMReceiveAttack(event) {
     // get dataset coordinates
-    // make sure that if already beenhit, return
-    // player.playturn
-    // generate random coords until valid
-    // cpu.playturn
+    const row = parseInt(event.target.dataset.row);
+    const cell = parseInt(event.target.dataset.cell);
+    console.log(row, cell);
+    if (game.getWaitingPlayer().getBoard().board[row][cell].beenHit === true)
+      return;
+    if (game.gameOver) return;
+    try {
+      game.playRound([row, cell]);
+    } catch {
+      DOMInstructor.textContent = "Game over! Player 2 wins!";
+    }
+    updateBoard();
+    console.log(game.gameOver);
+
+    if (game.gameOver === true) {
+      // remove event listener from board.
+      DOMBoards[1].removeEventListener("click", DOMReceiveAttack);
+      return;
+    }
+    // generate random coords as long as theyre invalid...
+    // eslint-disable-next-line no-constant-condition
+    // while (true) {
+    //   const randX = Math.floor(Math.random() * 10);
+    //   const randY = Math.floor(Math.random() * 10);
+    //   if (
+    //     game.getWaitingPlayer().getBoard().board[randX][randY].beenHit === true
+    //   ) {
+    //     continue;
+    //   }
+    //   try {
+    //     game.playRound([randX, randY]);
+    //   } catch {
+    //     DOMInstructor.textContent = "Game over! Human wins!";
+    //   }
+    //   break;
+    // }
+    try {
+      game.computerPlayRound();
+    } catch {
+      DOMInstructor.textContent = "Game over! Player 1 wins!";
+    }
+    updateBoard();
+
+    if (game.gameOver === true) {
+      DOMBoards[1].removeEventListener("click", DOMReceiveAttack);
+    }
   }
   const DOMShipPlace = (event) => {
     const row = parseInt(event.target.dataset.row);

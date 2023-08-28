@@ -42,11 +42,12 @@ export default function Gamecontroller(
       true
     )
       return;
-    waitingPlayer.receiveAttack(coordinates);
-    if (waitingPlayer.allSunk()) {
+    waitingPlayer.getBoard().receiveAttack(coordinates);
+    if (waitingPlayer.getBoard().allSunk()) {
       activePlayer.isWinner = true;
       gameOver = true;
     }
+    console.log(gameOver);
     changeActivePlayer();
   };
   const getActivePlayer = () => activePlayer;
@@ -98,7 +99,7 @@ export default function Gamecontroller(
       const index = Math.floor(Math.random() * possibleMoves.length);
       playRound(possibleMoves[index]);
       if (
-        waitingPlayer.getBoard().board[possibleMoves[index][0]][
+        playerOne.getBoard().board[possibleMoves[index][0]][
           possibleMoves[index][1]
         ].shipCell !== null
       ) {
@@ -114,13 +115,13 @@ export default function Gamecontroller(
     while (keepGoing) {
       randX = Math.floor(Math.random() * 10);
       randY = Math.floor(Math.random() * 10);
-      if (waitingPlayer.getBoard().board[randX][randY].beenHit === false) {
+      if (playerOne.getBoard().board[randX][randY].beenHit === false) {
         playRound([randX, randY]);
         keepGoing = false;
       }
     }
     // check if this hit scored
-    if (waitingPlayer.getBoard().board[randX][randY].shipCell !== null) {
+    if (playerOne.getBoard().board[randX][randY].shipCell !== null) {
       lastComputerHit = [randX, randY];
     }
   };
@@ -139,5 +140,6 @@ export default function Gamecontroller(
     getHuman,
     getCPU,
     boardsFilled,
+    gameOver,
   };
 }
