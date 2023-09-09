@@ -1,0 +1,1 @@
+A battleship game to play against the computer :), practiced unit testing with Jest for the first time in this one.
